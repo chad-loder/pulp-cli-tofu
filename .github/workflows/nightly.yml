@@ -1,0 +1,27 @@
+---
+name: "Nightly"
+
+on:
+  schedule:
+    - cron: "15 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: "./.github/workflows/build.yml"
+  test:
+    needs:
+      - "build"
+    uses: "./.github/workflows/test.yml"
+  codeql:
+    permissions:
+      actions: "read"
+      contents: "read"
+      security-events: "write"
+    uses: "./.github/workflows/codeql.yml"
+  collect_changes:
+    permissions:
+      contents: "write"
+      pull-requests: "write"
+    uses: "./.github/workflows/collect_changes.yml"
+...
