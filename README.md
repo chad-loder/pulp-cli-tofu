@@ -4,8 +4,14 @@
 [pulp_tofu](https://github.com/chad-loder/pulp_tofu): OpenTofu provider mirrors, registry
 namespaces, published providers and modules, and registry tokens.
 
+> **Beta.** Like pulp_tofu, this is developed outside the Pulp Project. Neither package is
+> on PyPI yet; install both from git. The Pulp server needs the
+> [pulp_tofu plugin](https://chad-loder.github.io/pulp_tofu/).
+
 ```bash
-pip install pulp-cli-tofu
+pip install \
+  "pulp-glue-tofu @ git+https://github.com/chad-loder/pulp-cli-tofu#subdirectory=pulp-glue-tofu" \
+  "pulp-cli-tofu @ git+https://github.com/chad-loder/pulp-cli-tofu"
 
 pulp tofu remote create --name opentofu --url https://registry.opentofu.org/
 pulp tofu repository create --name providers --remote opentofu
@@ -18,4 +24,5 @@ pulp tofu namespace publish-module --name acme --module vpc --system aws --versi
 pulp tofu token create --name laptop --namespace <namespace href>
 ```
 
-`pulp-glue-tofu` is the version-agnostic library the commands are built on.
+To drive pulp_tofu from Python instead of the shell, use `pulp-glue-tofu`, the library
+these commands call.
