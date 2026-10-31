@@ -43,10 +43,16 @@ expect_succ pulp tofu namespace publish-module --name "${NAMESPACE}" \
 expect_succ pulp tofu content -t module_version list --namespace "${NAMESPACE}"
 [[ "$(echo "$OUTPUT" | jq -r '.[0].name')" == "vpc" ]]
 
+expect_succ pulp tofu namespace role add --name "${NAMESPACE}" \
+  --role tofu.tofunamespace_consumer --user admin
+expect_succ pulp tofu namespace role remove --name "${NAMESPACE}" \
+  --role tofu.tofunamespace_consumer --user admin
+
 expect_succ pulp tofu token create --name "${ENTITIES_NAME}" --namespace "${NAMESPACE_HREF}" \
-  --scope publish
+  --scope publish --expires-at 2099-01-01T00:00:00Z
 TOKEN_HREF="$(echo "$OUTPUT" | jq -r .pulp_href)"
 [[ "$(echo "$OUTPUT" | jq -r .token)" != "null" ]]
+[[ "$(echo "$OUTPUT" | jq -r .expires_at)" == "2099-01-01T00:00:00Z" ]]
 expect_succ pulp tofu token show --href "${TOKEN_HREF}"
 [[ "$(echo "$OUTPUT" | jq -r .token)" == "null" ]]
 expect_succ pulp tofu token destroy --href "${TOKEN_HREF}"

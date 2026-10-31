@@ -10,6 +10,7 @@ from pulp_cli.generic import (
     show_command,
 )
 
+from pulp_glue.common.context import DATETIME_FORMATS
 from pulp_glue.common.i18n import get_translation
 from pulp_glue.tofu.context import PulpTofuTokenContext
 
@@ -43,7 +44,12 @@ create_options = [
             "modules; publish also publishes new ones."
         ),
     ),
-    click.option("--expires-at", help=_("ISO 8601 time the token stops working.")),
+    click.option(
+        "--expires-at",
+        # pulp-glue validates date-time fields as datetime objects, not strings.
+        type=click.DateTime(formats=[*DATETIME_FORMATS, "%Y-%m-%dT%H:%M:%S%z"]),
+        help=_("Time the token stops working, e.g. 2027-01-01T00:00:00Z."),
+    ),
 ]
 
 token.add_command(list_command())

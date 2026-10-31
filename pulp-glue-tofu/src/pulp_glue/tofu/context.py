@@ -96,6 +96,7 @@ class PulpTofuNamespaceContext(PulpEntityContext):
     ID_PREFIX = "pulp_tofu_namespaces"
     NEEDS_PLUGINS = [PluginRequirement(PLUGIN)]
     NULLABLES = {"distribution", "keyring", "signing_service"}
+    CAPABILITIES = {"roles": []}
 
     def publish(self, files: t.Sequence[Path], chunk_size: int | None = None) -> t.Any:
         """Publish one provider release from its files, named as GoReleaser names them.
