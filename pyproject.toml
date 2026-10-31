@@ -7,6 +7,7 @@ name = "pulp-cli-tofu"
 version = "0.0.1.dev0"
 description = "Command line interface to talk to pulpcore's REST API. (Tofu plugin commands)"
 readme = "README.md"
+keywords = ["pulp", "pulp-cli", "opentofu", "terraform", "provider-registry", "module-registry"]
 requires-python = ">=3.10"
 license = "GPL-2.0-or-later"
 authors = [
