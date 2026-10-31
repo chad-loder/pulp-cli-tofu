@@ -34,7 +34,15 @@ create_options = [
         required=True,
         help=_("href of a namespace the token covers; repeatable."),
     ),
-    click.option("--scope", type=click.Choice(["read", "publish"]), default="read"),
+    click.option(
+        "--scope",
+        type=click.Choice(["read", "update", "publish"]),
+        default="read",
+        help=_(
+            "read reads; update also publishes new versions of existing providers and "
+            "modules; publish also publishes new ones."
+        ),
+    ),
     click.option("--expires-at", help=_("ISO 8601 time the token stops working.")),
 ]
 
